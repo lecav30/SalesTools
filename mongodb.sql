@@ -24,7 +24,7 @@ db.createCollection(
                 },
             "turno" : {
                 bsonType: "array",
-                description: "hora de inicio y fin del turno es un string y es obligatorio",
+                description: "Hora de inicio y fin del turno es un array de ints y es obligatorio",
                 minItems: 2,
                 uniqueItems: true,
                 items: { bsonType: "int"}
@@ -39,11 +39,11 @@ db.createCollection(
                     properties: {
                         "tipo": {
                             enum: ["salario", "sueldo", "honoraios","comision","sin sueldo"],
-                            description: "Tipo de modod de remuneracion al empleado"
+                            description: "Tipo de modo de remuneracion al empleado es un string y es obligatorio"
                         },
                         "cantidad": {
                             bsonType: "double",
-                            description: "Tipo de modo de remuneración al empleado es un string y es obligatorio"
+                            description: "Cantidad remunerada al empleado es un double y es obligatorio"
                         }
                     },
                 },
@@ -85,7 +85,7 @@ db.createCollection(
                 },
             "producto": {
                 bsonType: "array",
-                description: "Array que tiene los id productos que se vendieron",
+                description: "Array que tiene los id productos que se vendieron y es obligatorio",
                 minItems: 1,
                 uniqueItems: true,
                 items: {bsonType: "int"}
@@ -104,7 +104,7 @@ db.createCollection(
                 },
             "fecha": {
                 bsonType: "date",
-                description: "La fecha de la venta "
+                description: "La fecha de la venta es un date y es obligatorio"
                 },
             "cupones": {
                 bsonType: "object",
