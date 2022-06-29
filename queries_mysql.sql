@@ -131,3 +131,10 @@ SELECT categoria_id, Total FROM(
            JOIN productos P ON VP.producto_id = P.id
            JOIN categorias C on P.categoria_id = C.id
        GROUP BY categoria_id) AS MAXIMO);
+       
+# Consultar cual es la cantidad de un determinado producto que fue provista por los proveedores.
+SELECT pro.nombre AS Producto, pr.nombre AS Proveedor, cantidad AS Cantidad FROM productos pro
+    JOIN productos_pedido pp ON pro.id = pp.producto_id
+    JOIN pedidos p ON pp.pedido_id = p.id
+    JOIN proveedores pr on p.proveedor_id = pr.id
+GROUP BY producto_id;
