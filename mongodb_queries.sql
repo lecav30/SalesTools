@@ -263,7 +263,7 @@ db.empleados.aggregate([
     }
 ]);
 
-// Consultar cuánto se ha vendido en un día determinado
+// Consultar las ganancias de en día determinado
 db.ventas.aggregate([
     {
         $match:
@@ -288,7 +288,7 @@ db.ventas.aggregate([
     {
         $project:
             {
-                "Monto total del día": "$monto_total",
+                "Ganancias del día": "$monto_total",
                 _id: 0
             }
     },
