@@ -157,7 +157,7 @@ db.ventas.aggregate([
         }
     },
     {
-        $sort: {cantidad: -1}
+        $sort: {Cantidad: -1}
     },
     {
         $limit: 1
