@@ -1,4 +1,4 @@
-use sales_tools2;
+use sales_tools;
 
 // Consultar cual es el método de pago más utilizado por los clientes
 db.ventas.aggregate([
