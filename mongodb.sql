@@ -23,12 +23,19 @@ db.createCollection(
                 description: "Apellido del empleado es un string y es obligatorio"
                 },
             "turno" : {
-                bsonType: "array",
-                description: "Hora de inicio y fin del turno es un array de ints y es obligatorio",
-                minItems: 2,
-                uniqueItems: true,
-                items: { bsonType: "int"}
+                bsonType: "object",
+                required: ["hora_entrada","hora_salida"],
+                properties: {
+                    "hora_entrada": {
+                        bsonType: "int",
+                        description: "Hora de etrada del empelado es un int y es obligatorio"
+                    },
+                    "hora_salida": {
+                        bsonType: "int",
+                        description: "Hora de salida del empelado es un int y es obligatorio"
+                    }
                 },
+            },
             "seguro" : {
                 bsonType: "string",
                 description: "Nombre del seguro afiliado es un string y es obligatorio"
@@ -137,11 +144,20 @@ Inserción para Empleados
 */
 
 db.empleados.insertMany([
+     {
+        nombre: "Joel",
+        id: 43562875,
+        apellidos: "Valdez",
+        turno: {hora_entrada:8,hora_salida:16},
+        seguro: "Riesgo",
+        remuneracion: {tipo: "sueldo", cantidad: 1700},
+        direccion: {distrito: "Ate Vitarte", provincia: "Lima", departamento: "Lima"}
+    },
     {
         nombre: "Carlos",
         id: 21112678,
         apellidos: "Sanchez",
-        turno: [7,15],
+        turno: {hora_entrada:7,hora_salida:15},
         seguro: "Vida",
         remuneracion: {tipo: "salario", cantidad: 678},
         direccion: {distrito: "Comas", provincia: "Lima", departamento: "Lima"}
@@ -150,7 +166,7 @@ db.empleados.insertMany([
         nombre: "Lenin",
         id: 30123123,
         apellidos: "Rojas",
-        turno: [8,16],
+        turno: {hora_entrada:8,hora_salida:16},
         seguro: "Vida",
         remuneracion: {tipo: "sueldo", cantidad: 1300},
         direccion: {distrito: "Ventanilla", provincia: "Callao", departamento: "Lima"}
@@ -159,7 +175,7 @@ db.empleados.insertMany([
         nombre: "Jesús",
         id: 72556278,
         apellidos: "Rojas",
-        turno: [9,11],
+        turno: {hora_entrada:9,hora_salida:11},
         seguro: "Riesgo",
         remuneracion: {tipo: "honorarios", cantidad: 300},
         direccion: {distrito: "San Martin", provincia: "Lima", departamento: "Lima"}
@@ -168,7 +184,7 @@ db.empleados.insertMany([
         nombre: "Angel",
         id: 71546179,
         apellidos: "Balcazar",
-        turno: [7,15],
+        turno: {hora_entrada:7,hora_salida:15},
         seguro: "Riesgo",
         remuneracion: {tipo: "salario", cantidad: 1000},
         direccion: {distrito: "Chorrillos", provincia: "Lima", departamento: "Lima"}
@@ -177,7 +193,7 @@ db.empleados.insertMany([
         nombre: "Jeferson",
         id: 74567854,
         apellidos: "Valdez",
-        turno: [8,16],
+        turno: {hora_entrada:8,hora_salida:16},
         seguro: "Vida",
         remuneracion: {tipo: "comision", cantidad: 250},
         direccion: {distrito: "Ate Vitarte", provincia: "Lima", departamento: "Lima"}
@@ -186,7 +202,7 @@ db.empleados.insertMany([
         nombre: "Joel",
         id: 43562875,
         apellidos: "Valdez",
-        turno: [8,16],
+        turno: {hora_entrada:8,hora_salida:16},
         seguro: "Riesgo",
         remuneracion: {tipo: "sueldo", cantidad: 1700},
         direccion: {distrito: "Ate Vitarte", provincia: "Lima", departamento: "Lima"}
@@ -195,7 +211,7 @@ db.empleados.insertMany([
         nombre: "Mateo",
         id: 24576895,
         apellidos: "Quispe",
-        turno: [1,9],
+        turno: {hora_entrada:8,hora_salida:15},
         seguro: "Riesgo",
         remuneracion: {tipo: "salario", cantidad: 1200},
         direccion: {distrito: "Breña", provincia: "Lima", departamento: "Lima"}
@@ -204,7 +220,7 @@ db.empleados.insertMany([
         nombre: "Jonas",
         id: 45781296,
         apellidos: "Salazar",
-        turno: [1,9],
+        turno: {hora_entrada:8,hora_salida:16},
         seguro: "Vida",
         remuneracion: {tipo: "salario", cantidad: 1200},
         direccion: {distrito: "Breña", provincia: "Lima", departamento: "Lima"}
@@ -213,7 +229,7 @@ db.empleados.insertMany([
         nombre: "Sebastian",
         id: 41526389,
         apellidos: "Levano",
-        turno: [9,17],
+        turno: {hora_entrada:9,hora_salida:17},
         seguro: "Vida",
         remuneracion: {tipo: "sueldo", cantidad: 1700},
         direccion: {distrito: "Chorrillos", provincia: "Lima", departamento: "Lima"}
@@ -222,7 +238,7 @@ db.empleados.insertMany([
         nombre: "Eduardo",
         id: 78586859,
         apellidos: "Cavero",
-        turno: [8,16],
+        turno: {hora_entrada:8,hora_salida:16},
         seguro: "Vida",
         remuneracion: {tipo: "comision", cantidad: 355},
         direccion: {distrito: "Lima", provincia: "Lima", departamento: "Lima"}
@@ -231,7 +247,7 @@ db.empleados.insertMany([
         nombre: "Alipio",
         id: 20103545,
         apellidos: "Perez",
-        turno: [11,13],
+        turno: {hora_entrada:10,hora_salida:11},
         seguro: "Riesgo",
         remuneracion: {tipo: "comision", cantidad: 243},
         direccion: {distrito: "El Agustino", provincia: "Lima", departamento: "Lima"}
@@ -240,7 +256,7 @@ db.empleados.insertMany([
         nombre: "Elmer",
         id: 60542105,
         apellidos: "Brazo",
-        turno: [9,17],
+        turno: {hora_entrada:9,hora_salida:17},
         seguro: "Vida",
         remuneracion: {tipo: "sueldo", cantidad: 1700},
         direccion: {distrito: "Ventanilla", provincia: "Callao", departamento: "Callao"}
@@ -249,7 +265,7 @@ db.empleados.insertMany([
         nombre: "Miguel",
         id: 78256143,
         apellidos: "Lopez",
-        turno: [10,18],
+        turno: {hora_entrada:10,hora_salida:11},
         seguro: "Riesgo",
         remuneracion: {tipo: "comision", cantidad: 243},
         direccion: {distrito: "Lince", provincia: "Lima", departamento: "Lima"}
@@ -258,7 +274,7 @@ db.empleados.insertMany([
         nombre: "Lionel",
         id: 85204673,
         apellidos: "Saravia",
-        turno: [9,17],
+        turno: {hora_entrada:9,hora_salida:17},
         seguro: "Vida",
         remuneracion: {tipo: "sueldo", cantidad: 1800},
         direccion: {distrito: "Comas", provincia: "Lima", departamento: "Lima"}
@@ -267,7 +283,7 @@ db.empleados.insertMany([
         nombre: "Josue",
         id: 43917386,
         apellidos: "Catedral",
-        turno: [9,17],
+        turno: {hora_entrada:9,hora_salida:17},
         seguro: "Vida",
         remuneracion: {tipo: "sueldo", cantidad: 1800},
         direccion: {distrito: "El Agustino", provincia: "Lima", departamento: "Lima"}
@@ -276,7 +292,7 @@ db.empleados.insertMany([
         nombre: "Antony",
         id: 30629584,
         apellidos: "Carcia",
-        turno: [8,13],
+        turno: {hora_entrada:8,hora_salida:13},
         seguro: "Vida",
         remuneracion: {tipo: "salario", cantidad: 1250},
         direccion: {distrito: "La Molina", provincia: "Lima", departamento: "Lima"}
@@ -285,7 +301,7 @@ db.empleados.insertMany([
         nombre: "Roberto",
         id: 75386421,
         apellidos: "Valdivia",
-        turno: [7,15],
+        turno: {hora_entrada:7,hora_salida:15},
         seguro: "Riesgo",
         remuneracion: {tipo: "salario", cantidad: 1200},
         direccion: {distrito: "La Molina", provincia: "Lima", departamento: "Lima"}
@@ -294,7 +310,7 @@ db.empleados.insertMany([
         nombre: "Paul",
         id: 98657452,
         apellidos: "Cabezas",
-        turno: [7,15],
+        turno: {hora_entrada:7,hora_salida:15},
         seguro: "Riesgo",
         remuneracion: {tipo: "comision", cantidad: 280},
         direccion: {distrito: "La Victoria", provincia: "Lima", departamento: "Lima"}
@@ -303,7 +319,7 @@ db.empleados.insertMany([
         nombre: "Abner",
         id: 98654325,
         apellidos: "Martinez",
-        turno: [11,13],
+        turno: {hora_entrada:11,hora_salida:13},
         seguro: "Riesgo",
         remuneracion: {tipo: "honorarios", cantidad: 280},
         direccion: {distrito: "Independencia", provincia: "Lima", departamento: "Lima"}
@@ -312,7 +328,7 @@ db.empleados.insertMany([
         nombre: "Daniel",
         id: 98645652,
         apellidos: "Poma",
-        turno: [9,10],
+        turno: {hora_entrada:9,hora_salida:10},
         seguro: "Riesgo",
         remuneracion: {tipo: "honorarios", cantidad: 100},
         direccion: {distrito: "Independencia", provincia: "Lima", departamento: "Lima"}
@@ -321,7 +337,7 @@ db.empleados.insertMany([
         nombre: "Brayan",
         id: 74516243,
         apellidos: "Morales",
-        turno: [8,17],
+        turno: {hora_entrada:8,hora_salida:17},
         seguro: "Vida",
         remuneracion: {tipo: "sueldo", cantidad: 1700},
         direccion: {distrito: "Breña", provincia: "Lima", departamento: "Lima"}
