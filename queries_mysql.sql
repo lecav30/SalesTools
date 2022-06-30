@@ -80,34 +80,32 @@ SELECT e.id, e.nombre, apellidos FROM empleados e
     JOIN distritos d2 ON d.distrito_id = d2.id
 WHERE d2.nombre = 'Comas';
 
-# Consultar el producto más vendido
-SELECT MAX(total)
-FROM (
-    SELECT p.nombre, SUM(cantidad) total
-    FROM productos p
-        JOIN venta_productos vp ON p.id = vp.producto_id
-    GROUP BY p.nombre) Resultado;
+#Consultar el producto más vendido
+SELECT p.nombre, SUM(vp.cantidad) AS cantidad
+FROM productos p
+         JOIN venta_productos vp ON p.id = vp.producto_id
+GROUP BY p.nombre
+ORDER BY 2 DESC LIMIT 1;
 
-# Consultar por cada cliente, indicar el nombre del cliente, los nombres de los productos adquiridos y
-# la cantidad de cada producto.
-SELECT c.nombre, p.nombre, SUM(vp.cantidad) total
+#Consultar por cada cliente, indicar el nombre del cliente, los nombres de los productos adquiridos y la cantidad de cada producto.
+SELECT c.nombre, p.nombre, SUM(vp.cantidad) AS total
 FROM clientes c
-    JOIN ventas v ON c.id = v.cliente_id
-    JOIN venta_productos vp ON v.id = vp.venta_id
-    JOIN productos p ON p.id = vp.producto_id
+         JOIN ventas v ON c.id = v.cliente_id
+         JOIN venta_productos vp ON v.id = vp.venta_id
+         JOIN productos p ON p.id = vp.producto_id
 GROUP BY c.nombre, p.nombre;
 
-# Consultar la cantidad de ventas realizadas con cupones
-SELECT COUNT(id) cantidad
+#Consultar la cantidad de ventas realizadas con cupones
+SELECT COUNT(id) AS cantidad
 FROM ventas
 WHERE cupon_id>=1;
 
-# Consultar el cupón más utilizado en las ventas
-SELECT MAX(ventas)
-FROM (SELECT c.descuento, COUNT(v.id) ventas
-      FROM cupones c
-               JOIN ventas v ON c.id = v.cupon_id
-      GROUP BY c.descuento) resultado;
+#Consultar el cupón más utilizado en las ventas
+SELECT c.descuento, c.fecha_caducidad, c.cantidad, COUNT(v.id) AS ventas
+FROM cupones c
+         JOIN ventas v ON c.id = v.cupon_id
+GROUP BY c.descuento, c.fecha_caducidad, c.cantidad
+ORDER BY 4 DESC LIMIT 1;
 
 # Consultar el turno en donde trabajan el mayor número de empleados
 SELECT turno_id, MAX(Total)  FROM (
@@ -131,7 +129,7 @@ SELECT categoria_id, Total FROM(
            JOIN productos P ON VP.producto_id = P.id
            JOIN categorias C on P.categoria_id = C.id
        GROUP BY categoria_id) AS MAXIMO);
-       
+
 # Consultar cual es la cantidad de un determinado producto que fue provista por los proveedores.
 SELECT pro.nombre AS Producto, pr.nombre AS Proveedor, cantidad AS Cantidad FROM productos pro
     JOIN productos_pedido pp ON pro.id = pp.producto_id
